@@ -5,7 +5,7 @@ provider "aws" {
 #Cria o recurso para usar uma chave de acesso  
 resource "aws_key_pair" "key-pair" {
   key_name   = "apache-key"
-  public_key = file("/apache-key.pub")
+  public_key = file("/tf-app-rds.ppk.pub")
 
 }
 
@@ -29,7 +29,7 @@ resource "aws_instance" "terraform" {
       type        = "ssh"
       host        = self.public_ip
       user        = var.user_ssh
-      private_key = file("/apache-key")
+      private_key = file("/tf-app-rds")
     }
 
 #Promove a instalação de recursos na instancia

@@ -1,20 +1,20 @@
 variable "region" {
   type        = string
   description = "Regiao"
-  default     = "us-east-2"
+  default     = "us-east-1"
 
 }
 
 variable "ami" {
   type        = string
-  description = ""
-  default     = "ami-0cc87e5027adcdca8"
+  description = "Idenficacao da maquina"
+  default     = "ami-053b0d53c279acc90"
 
 }
 
 variable "instance_type" {
   type        = string
-  description = ""
+  description = "Tamanho da instancia"
   default     = "t2.micro"
 
 }
