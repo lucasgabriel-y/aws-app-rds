@@ -43,6 +43,31 @@ resource "aws_instance" "terraform" {
 
 }
 
+
+resource "aws_ebs_snapshot" "ec2_snapshot" {
+  volume_id = aws_instance.terraform.root_block_device[0].volume_id
+}
+
+#Cria uma AMI com base na EC2 criada anteriormente
+resource "aws_ami" "ami_app" {
+  name                = "ami-app-db"
+  description         = "AMI criada a partir da EC2"
+  root_device_name    = "/dev/sda1"
+
+  ebs_block_device {
+    device_name = "/dev/sda1"
+    snapshot_id = aws_ebs_snapshot.ec2_snapshot.id
+    volume_size = 10
+    delete_on_termination = true
+  }
+
+  tags = {
+    Name = "ami-app-db"
+  }
+}
+
+
+
 #Associa um IP elastico a uma instancia
 resource "aws_eip" "eip" {
   instance = aws_instance.terraform.id

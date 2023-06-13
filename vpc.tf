@@ -76,8 +76,6 @@ resource "aws_security_group" "public_security_group" {
 }
 
 
-
-
 #cria um grupo de segurança para o ELB
 
 resource "aws_security_group" "elb_sg" {
@@ -86,20 +84,27 @@ resource "aws_security_group" "elb_sg" {
   vpc_id      = aws_vpc.apprds_vpc.id
 
   ingress {
-    description      = "TLS from VPC"
+    description      = "Trafego HTTPS"
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
-    cidr_blocks      = [aws_vpc.apprds_vpc.cidr_block]
-    ipv6_cidr_blocks = [aws_vpc.apprds_vpc.ipv6_cidr_block]
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+
+    ingress {
+    description      = "Trafego HTTP"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -107,7 +112,41 @@ resource "aws_security_group" "elb_sg" {
   }
 }
 
+#cria um grupo de segurança para o ASG
 
+resource "aws_security_group" "asg_sg" {
+  name        = "asg_sg"
+  description = "Grupo de Seguranca do ASG"
+  vpc_id      = aws_vpc.apprds_vpc.id
+
+  ingress {
+    description      = "Trafego HTTPS"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+
+    ingress {
+    description      = "Trafego HTTP"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "asg_sg"
+  }
+}
 
 
 # Cria uma subnet privada
