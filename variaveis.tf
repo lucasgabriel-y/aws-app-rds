@@ -7,7 +7,7 @@ variable "region" {
 
 variable "ami" {
   type        = string
-  description = "Idenficacao da maquina"
+  description = "Imagem"
   default     = "ami-053b0d53c279acc90"
 
 }
@@ -22,6 +22,6 @@ variable "instance_type" {
 variable "user_ssh" {
   type        = string
   description = "Usuario SSH"
-  default     = "ec2-user"
+  default     = "ubuntu"
 
 }

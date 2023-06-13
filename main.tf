@@ -4,8 +4,8 @@ provider "aws" {
 
 #Cria o recurso para usar uma chave de acesso  
 resource "aws_key_pair" "key-pair" {
-  key_name   = "apache-key"
-  public_key = file("/tf-app-rds.ppk.pub")
+  key_name   = "tf-app-rds"
+  public_key = file("/id_rsa.pub")
 
 }
 
@@ -20,7 +20,7 @@ resource "aws_instance" "terraform" {
 
 
   tags = {
-    Name = "Apache terraform"
+    Name = "RDS terraform"
   }
 
 #Promove o acesso SSH a instancia
@@ -29,19 +29,15 @@ resource "aws_instance" "terraform" {
       type        = "ssh"
       host        = self.public_ip
       user        = var.user_ssh
-      private_key = file("/tf-app-rds")
+      private_key = file("/id_rsa")
     }
 
 #Promove a instalação de recursos na instancia
     inline = [
-      "sudo yum update -y",
-      "sudo yum install -y httpd",
-      "sudo yum install git -y",
-      "sudo systemctl start httpd",
-      "sudo systemctl enable httpd",
-      "git clone https://bitbucket.org/dptrealtime/html-web-app.git",
-      "cd html-web-app",
-      "sudo cp * -r /var/www/html"
+      "sudo apt install update -y",
+      "sudo apt install apache2 -y",
+      "sudo systemctl start apache2",
+      "sudo systemctl enable apache2",
     ]
   }
 
