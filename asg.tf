@@ -10,15 +10,25 @@ resource "aws_launch_template" "lt_asg" {
 
 #Cria o recurso do ASG
 resource "aws_autoscaling_group" "asg" {
-  name             = "ASG"
-  min_size         = 2  
-  max_size         = 4  
-  desired_capacity = 2  
+  name             = "asg"
+  min_size         = 1  
+  max_size         = 2  
+  desired_capacity = 1  
+  health_check_type = "ELB"
   vpc_zone_identifier = [aws_subnet.public_subnet.id, aws_subnet.public_subnet_b.id] 
+ 
+
 
   launch_template {
     id      = aws_launch_template.lt_asg.id
     version = "$Latest"
   }
 
+}
+
+
+# Create a new ALB Target Group attachment
+resource "aws_autoscaling_attachment" "example" {
+  autoscaling_group_name = aws_autoscaling_group.asg.id
+  lb_target_group_arn    = aws_lb_target_group.alb_target.arn
 }

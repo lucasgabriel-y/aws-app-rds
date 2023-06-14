@@ -53,7 +53,7 @@ resource "aws_ami" "ami_app" {
   name                = "ami-app-db"
   description         = "AMI criada a partir da EC2"
   root_device_name    = "/dev/sda1"
-  #virtualization_type = "hvm"
+  virtualization_type = "hvm"
 
   ebs_block_device {
     device_name = "/dev/sda1"
@@ -61,7 +61,6 @@ resource "aws_ami" "ami_app" {
     volume_size = 10
     delete_on_termination = true
   }
-
 
   tags = {
     Name = "ami-app-db"
