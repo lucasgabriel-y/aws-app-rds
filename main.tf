@@ -14,13 +14,13 @@ resource "aws_instance" "terraform" {
   ami                         = var.ami
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public_subnet.id
-  vpc_security_group_ids      = [aws_security_group.public_security_group.id]
+  vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
   associate_public_ip_address = true
   key_name                    = aws_key_pair.key-pair.key_name #Associa a chave de acesso a instancia
 
 
   tags = {
-    Name = "RDS terraform"
+    Name = "terraform"
   }
 
 #Promove o acesso SSH a instancia
@@ -34,10 +34,14 @@ resource "aws_instance" "terraform" {
 
 #Promove a instalação de recursos na instancia
     inline = [
-      "sudo apt install update -y",
-      "sudo apt install apache2 -y",
-      "sudo systemctl start apache2",
-      "sudo systemctl enable apache2",
+    "sudo apt update",
+    "sudo apt install apache2 -y",
+    "sudo systemctl start apache2",
+    "sudo systemctl enable apache2",
+    "git clone https://bitbucket.org/dptrealtime/html-web-app.git",
+    "cd html-web-app",
+    "sudo cp * -r /var/www/html",
+    "sudo systemctl restart apache2"
     ]
   }
 
@@ -61,6 +65,8 @@ resource "aws_ami" "ami_app" {
     volume_size = 10
     delete_on_termination = true
   }
+
+  
 
   tags = {
     Name = "ami-app-db"

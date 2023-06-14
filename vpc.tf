@@ -3,7 +3,7 @@ resource "aws_vpc" "apprds_vpc" {
   cidr_block = "10.0.0.0/16" # Bloco de endereços IP da VPC
 
   tags = {
-    Name = "VPC app-rds"
+    Name = "tf-vpc"
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_security_group" "public_security_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["170.82.180.128/32"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -59,6 +59,13 @@ resource "aws_security_group" "public_security_group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
 
+  }
+
+    ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -100,6 +107,13 @@ resource "aws_security_group" "elb_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
+    ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -136,6 +150,13 @@ resource "aws_security_group" "asg_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
+    ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -148,6 +169,46 @@ resource "aws_security_group" "asg_sg" {
   }
 }
 
+resource "aws_security_group" "ec2_sg" {
+  name        = "ec2_sg"
+  description = "Acesso"
+  vpc_id      = aws_vpc.apprds_vpc.id
+
+  ingress {
+    description      = "Trafego HTTPS"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+
+    ingress {
+    description      = "Trafego HTTP"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+    ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ec2_sg"
+  }
+}
 
 # Cria uma subnet privada
 resource "aws_subnet" "private_subnet" {
