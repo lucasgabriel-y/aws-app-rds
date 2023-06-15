@@ -47,7 +47,6 @@ resource "aws_instance" "terraform" {
 
 }
 
-
 resource "aws_ebs_snapshot" "ec2_snapshot" {
   volume_id = aws_instance.terraform.root_block_device[0].volume_id
 }

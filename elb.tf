@@ -1,4 +1,4 @@
-resource "aws_lb" "example" {
+resource "aws_lb" "tf_alb" {
   name               = "apprds-lb-tf"
   internal           = false
   load_balancer_type = "application"
@@ -35,8 +35,8 @@ resource "aws_lb_target_group_attachment" "example_attachment" {
 
 
 #Cria o listener group do ALB
-resource "aws_lb_listener" "example" {
-  load_balancer_arn = aws_lb.example.arn
+resource "aws_lb_listener" "alb_listener" {
+  load_balancer_arn = aws_lb.tf_alb.arn
   port              = 80
   protocol          = "HTTP"
 
@@ -48,5 +48,5 @@ resource "aws_lb_listener" "example" {
 
 
 output "elb_dns_name" {
-  value = aws_lb.example.dns_name
+  value = aws_lb.tf_alb.dns_name
 }
