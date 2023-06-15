@@ -46,7 +46,6 @@ resource "aws_lb_listener" "alb_listener" {
   }
 }
 
-
 output "elb_dns_name" {
   value = aws_lb.tf_alb.dns_name
 }

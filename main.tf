@@ -70,8 +70,6 @@ resource "aws_ami" "ami_app" {
   }
 }
 
-
-
 #Associa um IP elastico a uma instancia
 resource "aws_eip" "eip" {
   instance = aws_instance.terraform.id
@@ -82,11 +80,3 @@ output "IP" {
   value = aws_eip.eip.public_ip
 
 }
-
-
-
-
-
-
-
-

@@ -51,6 +51,13 @@ variable "lb_type" {
 
 }
 
+variable "sns_endpoint" {
+  type        = string
+  description = "Email SNS"
+  default     = "gabriel.lglg93@gmail.com"
+
+}
+
 variable "user_ssh" {
   type        = string
   description = "Usuario SSH"

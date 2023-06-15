@@ -27,7 +27,6 @@ resource "aws_subnet" "public_subnet_b" {
   }
 }
 
-
 # Cria um grupo de segurança para a subnet pública
 resource "aws_security_group" "public_security_group" {
   name_prefix = "public_security_group"
@@ -82,9 +81,7 @@ resource "aws_security_group" "public_security_group" {
   }
 }
 
-
 #cria um grupo de segurança para o ELB
-
 resource "aws_security_group" "elb_sg" {
   name        = "elb_sg"
   description = "Acesso a partir do ELB"
@@ -127,7 +124,6 @@ resource "aws_security_group" "elb_sg" {
 }
 
 #cria um grupo de segurança para o ASG
-
 resource "aws_security_group" "asg_sg" {
   name        = "asg_sg"
   description = "Grupo de Seguranca do ASG"
@@ -220,7 +216,6 @@ resource "aws_subnet" "private_subnet" {
   }
 }
 
-
 # Cria uma subnet privada
 resource "aws_subnet" "private_subnet_b" {
   vpc_id     = aws_vpc.apprds_vpc.id
@@ -254,7 +249,6 @@ resource "aws_route_table" "public_route_table" {
   }
 }
 
-
 # Associa a subnet pública com a tabela de rotas pública
 resource "aws_route_table_association" "public_association" {
   subnet_id      = aws_subnet.public_subnet.id
@@ -266,4 +260,3 @@ resource "aws_route_table_association" "public_association_b" {
   subnet_id      = aws_subnet.public_subnet_b.id
   route_table_id = aws_route_table.public_route_table.id
 }
-
