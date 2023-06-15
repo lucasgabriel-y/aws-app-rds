@@ -1,7 +1,7 @@
 resource "aws_lb" "tf_alb" {
   name               = "apprds-lb-tf"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = var.lb_type
   security_groups    = [aws_security_group.elb_sg.id]
   subnets            = [aws_subnet.public_subnet.id, aws_subnet.public_subnet_b.id]  # IDs das sub-redes
 
@@ -27,7 +27,7 @@ resource "aws_lb_target_group" "alb_target" {
 }
 
 #Associa uma instancia a um target group do ALB
-resource "aws_lb_target_group_attachment" "example_attachment" {
+resource "aws_lb_target_group_attachment" "intance_attachment" {
   target_group_arn = aws_lb_target_group.alb_target.arn
   target_id        = aws_instance.terraform.id
   port             = 80

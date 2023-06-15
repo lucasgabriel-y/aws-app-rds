@@ -53,22 +53,20 @@ resource "aws_ebs_snapshot" "ec2_snapshot" {
 
 #Cria uma AMI com base na EC2 criada anteriormente
 resource "aws_ami" "ami_app" {
-  name                = "ami-app-db"
-  description         = "AMI criada a partir da EC2"
-  root_device_name    = "/dev/sda1"
-  virtualization_type = "hvm"
+  name                = var.nome-ami
+  description         = var.descricao-ami
+  root_device_name    = var.root-device-ami
+  virtualization_type = var.tipo-virtualizacao
 
   ebs_block_device {
-    device_name = "/dev/sda1"
+    device_name = var.root-device-ami
     snapshot_id = aws_ebs_snapshot.ec2_snapshot.id
     volume_size = 10
     delete_on_termination = true
   }
 
-  
-
   tags = {
-    Name = "ami-app-db"
+    Name = var.nome-ami
   }
 }
 

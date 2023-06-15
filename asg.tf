@@ -1,11 +1,10 @@
 #Configuracao do launch template
 
 resource "aws_launch_template" "lt_asg" {
-  name_prefix   = "example-launch-template"
+  name_prefix   = "launch-template"
   image_id      = aws_ami.ami_app.id 
-  instance_type = "t2.micro" 
+  instance_type = var.instance_type 
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
-  #key_name      = file("/id_rsa")  
 
 }
 
@@ -32,9 +31,8 @@ resource "aws_autoscaling_group" "asg" {
 
 }
 
-
-# Create a new ALB Target Group attachment
-resource "aws_autoscaling_attachment" "example" {
+#Cria uma associação do ASG com o ALB
+resource "aws_autoscaling_attachment" "attachment_alb_asg" {
   autoscaling_group_name = aws_autoscaling_group.asg.id
   lb_target_group_arn    = aws_lb_target_group.alb_target.arn
 }
