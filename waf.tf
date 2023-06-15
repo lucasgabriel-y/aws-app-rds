@@ -5,8 +5,7 @@ resource "aws_wafv2_ip_set" "ip_set" {
   ip_address_version = "IPV4"
   
   addresses = [
-    "192.0.2.0/24",
-    "203.0.113.0/24"
+    "170.82.180.128/32"
   ]
 }
 
@@ -17,13 +16,17 @@ resource "aws_wafv2_web_acl" "tf_waf" {
   scope       = "REGIONAL"
 
   default_action {
-    allow {}
+    block {}
   }
 
   rule {
-    name     = "ip-rule-example"
+    name     = "ip-rule"
     priority = 1
 
+    action {
+      allow {}
+    }
+    
     statement {
       ip_set_reference_statement {
         arn = aws_wafv2_ip_set.ip_set.arn
