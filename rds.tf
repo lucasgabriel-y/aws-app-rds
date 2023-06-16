@@ -41,7 +41,7 @@ resource "aws_db_instance" "db_instance" {
   engine_version       = "10.4"
   instance_class       = "db.t2.micro"
   multi_az             = true
-  identifier           = "db-instance"
+  identifier           = "instancia-db"
   username             = "admin"
   password             = "password123"
   db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name

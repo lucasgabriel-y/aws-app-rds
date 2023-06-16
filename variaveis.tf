@@ -38,7 +38,7 @@ variable "tipo-virtualizacao" {
 
 variable "instance_type" {
   type        = string
-  description = "Tamanho da instancia"
+  description = "Tamanho instancia"
   default     = "t2.micro"
 
 }
@@ -62,5 +62,12 @@ variable "user_ssh" {
   type        = string
   description = "Usuario SSH"
   default     = "ubuntu"
+
+}
+
+variable "nome_instancia" {
+  type        = string
+  description = "Nome da instancia"
+  default     = "terraform-app"
 
 }

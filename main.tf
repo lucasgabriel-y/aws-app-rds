@@ -18,9 +18,8 @@ resource "aws_instance" "terraform" {
   associate_public_ip_address = true
   key_name                    = aws_key_pair.key-pair.key_name #Associa a chave de acesso a instancia
 
-
   tags = {
-    Name = "terraform"
+    Name = "${var.nome_instancia}"
   }
 
 #Promove o acesso SSH a instancia
@@ -36,10 +35,12 @@ resource "aws_instance" "terraform" {
     inline = [
     "sudo apt update",
     "sudo apt install apache2 -y",
+    "sudo apt install mysql-client -y",
     "sudo systemctl start apache2",
     "sudo systemctl enable apache2",
-    "git clone https://bitbucket.org/dptrealtime/html-web-app.git",
-    "cd html-web-app",
+    "git clone https://github.com/lucasgabriel-y/redirect.git",
+    "sleep 5",
+    "cd redirect",
     "sudo cp * -r /var/www/html",
     "sudo systemctl restart apache2"
     ]
