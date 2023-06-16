@@ -18,6 +18,10 @@ Este projeto construído em Terraform provisiona uma infraestrutura na AWS compo
 **Banco de Dados**: As instâncias EC2 estão conectadas a um banco de dados que está em uma rede privada e abrange duas zonas de disponibilidade diferentes. Isso garante alta disponibilidade e recuperação de falhas para o banco de dados.
 
 ### Utilização:
-* Execute o comando **terraform init** para inicializar o Terraform.
-* Execute o comando **terraform plan** para visualizar as mudanças propostas pela configuração do Terraform.
+* Execute o comando **terraform init** para inicializar o Terraform;
+* Execute o comando **terraform plan** para visualizar as mudanças propostas pela configuração do Terraform;
 * Execute o comando **terraform apply** para criar a infraestrutura na AWS.
+
+### Próximos passos:
+* Adiconar uma distribuição no cloudfront para armazenar os conteúdos estáticos da aplicação, nesse caso um site;
+* Utilizar réplicas de leitura do Amazon RDS.
