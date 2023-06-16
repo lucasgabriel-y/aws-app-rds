@@ -26,4 +26,4 @@ Este projeto construído em Terraform provisiona uma infraestrutura na AWS compo
 * Adiconar uma distribuição no cloudfront para armazenar os conteúdos estáticos da aplicação, nesse caso um site;
 * Utilizar réplicas de leitura do Amazon RDS.
 
-![AWS](https://ibb.co/Dty3DCH)
+![AWS](https://i.ibb.co/1L5Hfqt/AWS-drawio-9.png)
